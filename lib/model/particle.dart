@@ -26,7 +26,7 @@ class CustomParticle extends Component with HasGameRef {
             )!,
         );
       },
-      lifespan: 1,
+      lifespan: 0.5,
     );
     add(
       ParticleSystemComponent(

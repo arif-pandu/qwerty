@@ -55,6 +55,7 @@ class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
     Future.delayed(Duration(seconds: 0), () {
       add(BoxPlatform(camera.gameSize / 2));
     });
+    randomNum = Random().nextInt(26);
 
     add(CustomParticle(position: ListPositions.position(size)[randomNum]));
   }
@@ -65,7 +66,6 @@ class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
     Set<LogicalKeyboardKey> keysPressed,
   ) {
     final isKeyDown = event is RawKeyDownEvent;
-    randomNum = Random().nextInt(26);
 
     if (event.logicalKey != ListKeyBoard.listKey[randomNum]) {
       if (ListKeyBoard.listKey.contains(event.logicalKey)) {
@@ -79,6 +79,7 @@ class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
         } else if (isChainExist && !isKeyDown) {
           laserPath.removeFromParent();
           isChainExist = false;
+          highlightLetter();
         }
       }
     }
@@ -86,7 +87,10 @@ class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
     return super.onKeyEvent(event, keysPressed);
   }
 
-  highlightLetter() {}
+  highlightLetter() {
+    randomNum = Random().nextInt(26);
+    add(CustomParticle(position: ListPositions.position(size)[randomNum]));
+  }
 
   updateScore() {
     score++;
