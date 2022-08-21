@@ -34,7 +34,7 @@ List<Wall> createBoundaries(Forge2DGame game) {
   return [
     Wall(topLeft, topRight),
     Wall(topRight, bottomRight),
-    Wall(bottomRight, bottomLeft),
+    // Wall(bottomRight, bottomLeft),
     Wall(bottomLeft, topLeft),
   ];
 }
@@ -54,6 +54,22 @@ class Wall extends BodyComponent {
       position: Vector2.zero(),
     );
 
+    return world.createBody(bodyDef)..createFixture(fixtureDef);
+  }
+}
+
+class ForbiddenWall extends BodyComponent {
+  @override
+  Body createBody() {
+    Shape shape = EdgeShape()
+      ..set(
+        Vector2(0, gameRef.camera.gameSize.y),
+        gameRef.camera.gameSize,
+      );
+    BodyDef bodyDef = BodyDef(
+      userData: this,
+    );
+    FixtureDef fixtureDef = FixtureDef(shape);
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
 }

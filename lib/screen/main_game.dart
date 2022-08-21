@@ -39,6 +39,7 @@ class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
 
     var boundaries = createBoundaries(this);
     boundaries.forEach(add);
+    add(ForbiddenWall());
 
     playerBall = PlayerBall();
     add(playerBall);
