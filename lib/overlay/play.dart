@@ -45,6 +45,7 @@ class PlayMenu extends StatelessWidget {
                       text: "PLAY",
                       onTap: () {
                         game.overlays.remove("menu");
+                        game.resetGame();
                         game.playGame();
                       },
                     ),

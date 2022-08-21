@@ -55,6 +55,7 @@ class GameOver extends StatelessWidget {
                       text: "MENU",
                       onTap: () async {
                         await game.resetGame();
+                        game.resumeEngine();
                         game.overlays.remove("gameover");
                         game.overlays.add("menu");
                       },

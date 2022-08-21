@@ -4,6 +4,7 @@ import 'package:qwerty/model/laser_path.dart';
 import 'package:qwerty/model/platform.dart';
 import 'package:qwerty/model/wall.dart';
 import 'package:qwerty/screen/main_game.dart';
+import 'package:qwerty/utils/random.dart';
 
 class PlayerBall extends BodyComponent<MainGame> with ContactCallbacks {
   @override
@@ -11,7 +12,8 @@ class PlayerBall extends BodyComponent<MainGame> with ContactCallbacks {
     Shape shape = CircleShape()..radius = 1.5;
     BodyDef bodyDef = BodyDef(
       type: BodyType.dynamic,
-      linearVelocity: Vector2(100, 100) * 100,
+      linearVelocity: Vector2(100, 100) * (doubleInRange(0, 1) - doubleInRange(0, 1)) * 100,
+      position: Vector2(doubleInRange(30, gameRef.camera.gameSize.x - 30), 0),
     );
     FixtureDef fixtureDef = FixtureDef(
       shape,
