@@ -42,26 +42,13 @@ class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
     add(ForbiddenWall());
 
     playerBall = PlayerBall();
-    add(playerBall);
+    // add(playerBall);
 
     var letters = createLetters(size);
     letters.forEach(add);
 
     scoreBoard = ScoreBoard(score: score);
     add(scoreBoard);
-
-    Future.delayed(const Duration(seconds: 3), () {
-      spawnBoxPlatform();
-      timer = Timer.periodic(
-        const Duration(seconds: 5),
-        (timer) {
-          spawnBoxPlatform();
-        },
-      );
-    });
-    randomNum = Random().nextInt(26);
-
-    add(CustomParticle(position: ListPositions.position(size)[randomNum]));
   }
 
   @override
@@ -89,6 +76,21 @@ class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
     }
 
     return super.onKeyEvent(event, keysPressed);
+  }
+
+  playGame() {
+    add(playerBall);
+    Future.delayed(const Duration(seconds: 3), () {
+      spawnBoxPlatform();
+      timer = Timer.periodic(
+        const Duration(seconds: 5),
+        (timer) {
+          spawnBoxPlatform();
+        },
+      );
+    });
+    randomNum = Random().nextInt(26);
+    add(CustomParticle(position: ListPositions.position(size)[randomNum]));
   }
 
   highlightLetter() {
