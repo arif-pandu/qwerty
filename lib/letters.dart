@@ -2,7 +2,7 @@ import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:qwerty/position.dart';
 
-class Letter extends Component with Game {
+class Letter extends Component with HasGameRef {
   Letter({
     required this.index,
     required this.srcPosition,
@@ -19,16 +19,15 @@ class Letter extends Component with Game {
   }
 
   Future<void> addLetterA() async {
-    Sprite letterA = await loadSprite("letter.png")
+    Sprite letterA = await gameRef.loadSprite("letter.png")
       // ..srcPosition = Vector2(0, 0)
       ..srcPosition = srcPosition
       ..srcSize = Vector2(50, 50);
 
     letter
       ..sprite = letterA
-      ..position = ListPositions.position(size)[index]
-      ..size = Vector2(size.x / 40, size.x / 40)
-      ..debugMode = true;
+      ..position = ListPositions.position(gameRef.camera.gameSize)[index]
+      ..size = Vector2(gameRef.camera.gameSize.x / 40, gameRef.camera.gameSize.x / 40);
 
     add(letter);
   }

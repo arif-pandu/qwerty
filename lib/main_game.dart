@@ -8,37 +8,35 @@ import 'package:qwerty/ball.dart';
 import 'package:qwerty/laser_path.dart';
 import 'package:qwerty/letters.dart';
 import 'package:qwerty/platform.dart';
+import 'package:qwerty/position.dart';
 import 'package:qwerty/wall.dart';
 
 class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
   MainGame()
       : super(
           gravity: Vector2.zero(),
-          zoom: 1,
         );
 
   int letterTapped = 0;
   final maxLetterTapped = 2;
-  List<LogicalKeyboardKey> pressedKey = [];
+  bool isChainExist = false;
 
   late PlayerBall playerBall;
+
+  late LaserPath laserPath;
 
   @override
   Future<void> onLoad() async {
     await super.onLoad();
+
     var boundaries = createBoundaries(this);
     boundaries.forEach(add);
 
     playerBall = PlayerBall();
-    // add(playerBall);
+    add(playerBall);
 
     var letters = createLetters(size);
     letters.forEach(add);
-
-    add(LaserPath(
-      startPoint: Vector2(200, 200),
-      endPoint: Vector2(300, 300),
-    ));
   }
 
   @override
@@ -46,7 +44,22 @@ class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
     RawKeyEvent event,
     Set<LogicalKeyboardKey> keysPressed,
   ) {
-    pressKey(event.logicalKey);
+    final isKeyDown = event is RawKeyDownEvent;
+
+    if (!isChainExist && isKeyDown) {
+      if (event.logicalKey == LogicalKeyboardKey.keyQ) {
+        isChainExist = true;
+        laserPath = LaserPath(startPoint: ListPositions.position(size)[22], endPoint: ListPositions.position(size)[0]);
+        add(laserPath);
+      } else if (event.logicalKey == LogicalKeyboardKey.keyW) {
+        isChainExist = true;
+        laserPath = LaserPath(startPoint: ListPositions.position(size)[22], endPoint: ListPositions.position(size)[1]);
+        add(laserPath);
+      }
+    } else if (isChainExist && !isKeyDown) {
+      laserPath.removeFromParent();
+      isChainExist = false;
+    }
 
     return super.onKeyEvent(event, keysPressed);
   }
