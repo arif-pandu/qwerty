@@ -21,7 +21,7 @@ class LaserPath extends BodyComponent {
 
     Shape shape = ChainShape()..createChain(vertices);
 
-    BodyDef bodyDef = BodyDef();
+    BodyDef bodyDef = BodyDef(userData: this);
     FixtureDef fixtureDef = FixtureDef(shape, friction: 0, restitution: 1);
 
     return world.createBody(bodyDef)..createFixture(fixtureDef);

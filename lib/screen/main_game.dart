@@ -1,9 +1,9 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:flame/events.dart';
-import 'package:flame_forge2d/flame_forge2d.dart';
+import 'package:flame_forge2d/flame_forge2d.dart' hide Timer;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:qwerty/model/ball.dart';
 import 'package:qwerty/model/laser_path.dart';
 import 'package:qwerty/model/letters.dart';
@@ -28,6 +28,8 @@ class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
   late LaserPath laserPath;
   late ScoreBoard scoreBoard;
 
+  late Timer timer;
+
   @override
   Color backgroundColor() => const Color(0xff1a1a1a);
 
@@ -47,8 +49,14 @@ class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
     scoreBoard = ScoreBoard(score: score);
     add(scoreBoard);
 
-    Future.delayed(Duration(seconds: 0), () {
+    Future.delayed(const Duration(seconds: 3), () {
       spawnBoxPlatform();
+      timer = Timer.periodic(
+        const Duration(seconds: 5),
+        (timer) {
+          spawnBoxPlatform();
+        },
+      );
     });
     randomNum = Random().nextInt(26);
 
@@ -85,7 +93,6 @@ class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
   highlightLetter() {
     randomNum = Random().nextInt(26);
     add(CustomParticle(position: ListPositions.position(size)[randomNum]));
-    spawnBoxPlatform();
   }
 
   updateScore() {
@@ -94,15 +101,15 @@ class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
   }
 
   spawnBoxPlatform() {
-    /// min X = 0
+    /// min X = 2
     /// max X = size.x - 2
-    /// min Y = 1
+    /// min Y = 2
     /// max Y = size.y * 2/5
 
     add(BoxPlatform(
       Vector2(
-        doubleInRange(0, camera.gameSize.x - 2),
-        doubleInRange(1, camera.gameSize.y * 2 / 5),
+        doubleInRange(2, camera.gameSize.x - 2),
+        doubleInRange(2, camera.gameSize.y * 2 / 5),
       ),
     ));
   }
