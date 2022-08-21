@@ -1,6 +1,9 @@
 import 'dart:math';
 
+import 'package:flame/components.dart';
 import 'package:flame/events.dart';
+import 'package:flame/palette.dart';
+import 'package:flame/text.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -8,6 +11,7 @@ import 'package:qwerty/model/ball.dart';
 import 'package:qwerty/model/ball.dart';
 import 'package:qwerty/model/laser_path.dart';
 import 'package:qwerty/model/letters.dart';
+import 'package:qwerty/model/score.dart';
 import 'package:qwerty/utils/list_keyboard.dart';
 import 'package:qwerty/model/platform.dart';
 import 'package:qwerty/utils/position.dart';
@@ -18,8 +22,19 @@ class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
 
   bool isChainExist = false;
 
+  late TextComponent scoreText;
+  int _score = 0;
+  int get score => _score;
+  set score(int value) {
+    _score = value;
+    scoreText.text = value.toString();
+  }
+
   late PlayerBall playerBall;
   late LaserPath laserPath;
+
+  @override
+  Color backgroundColor() => const Color(0xff1a1a1a);
 
   @override
   Future<void> onLoad() async {
@@ -34,9 +49,19 @@ class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
     var letters = createLetters(size);
     letters.forEach(add);
 
-    // add(Platform(camera.gameSize / 2));
+    // add(ScoreBoard(score: score));
+    add(
+      scoreText = TextComponent(
+        text: score.toString(),
+        anchor: Anchor.centerRight,
+        position: Vector2(camera.gameSize.x - 2, 2),
+        textRenderer: TextPaint(
+          style: TextStyle(fontSize: 3, color: BasicPalette.white.color),
+        ),
+      ),
+    );
 
-    Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(Duration(seconds: 0), () {
       add(BoxPlatform(camera.gameSize / 2));
     });
   }
@@ -66,6 +91,10 @@ class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
     }
 
     return super.onKeyEvent(event, keysPressed);
+  }
+
+  updateScore() {
+    score++;
   }
 }
 

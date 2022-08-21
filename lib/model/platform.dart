@@ -1,7 +1,7 @@
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:qwerty/model/ball.dart';
 
-class BoxPlatform extends BodyComponent with ContactCallbacks {
+class BoxPlatform extends BodyComponent {
   final Vector2 position;
 
   BoxPlatform(this.position);
@@ -18,7 +18,4 @@ class BoxPlatform extends BodyComponent with ContactCallbacks {
 
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
-
-  @override
-  void beginContact(Object other, Contact contact) {}
 }
