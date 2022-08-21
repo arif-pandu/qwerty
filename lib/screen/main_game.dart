@@ -22,16 +22,17 @@ class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
 
   bool isChainExist = false;
 
-  late TextComponent scoreText;
+  // late TextComponent scoreText;
   int _score = 0;
   int get score => _score;
   set score(int value) {
     _score = value;
-    scoreText.text = value.toString();
+    // scoreText.text = value.toString();
   }
 
   late PlayerBall playerBall;
   late LaserPath laserPath;
+  late ScoreBoard scoreBoard;
 
   @override
   Color backgroundColor() => const Color(0xff1a1a1a);
@@ -49,17 +50,18 @@ class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
     var letters = createLetters(size);
     letters.forEach(add);
 
-    // add(ScoreBoard(score: score));
-    add(
-      scoreText = TextComponent(
-        text: score.toString(),
-        anchor: Anchor.centerRight,
-        position: Vector2(camera.gameSize.x - 2, 2),
-        textRenderer: TextPaint(
-          style: TextStyle(fontSize: 3, color: BasicPalette.white.color),
-        ),
-      ),
-    );
+    scoreBoard = ScoreBoard(score: score);
+    add(scoreBoard);
+    // add(
+    //   scoreText = TextComponent(
+    //     text: score.toString(),
+    //     anchor: Anchor.centerRight,
+    //     position: Vector2(camera.gameSize.x - 2, 2),
+    //     textRenderer: TextPaint(
+    //       style: TextStyle(fontSize: 3, color: BasicPalette.white.color),
+    //     ),
+    //   ),
+    // );
 
     Future.delayed(Duration(seconds: 0), () {
       add(BoxPlatform(camera.gameSize / 2));
@@ -95,22 +97,6 @@ class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
 
   updateScore() {
     score++;
+    scoreBoard.textComponent.text = score.toString();
   }
 }
-
-//// EXAMPLE
-// class FindCoordinates extends BodyComponent {
-//   FindCoordinates({required this.offset});
-//   final Vector2 offset;
-
-//   @override
-//   Body createBody() {
-//     Shape circle = CircleShape()..radius = 2;
-//     BodyDef bodyDef = BodyDef(
-//       type: BodyType.static,
-//       position: offset,
-//     );
-//     FixtureDef fixtureDef = FixtureDef(circle, restitution: 1, friction: 0);
-//     return world.createBody(bodyDef)..createFixture(fixtureDef);
-//   }
-// }

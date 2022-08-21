@@ -21,10 +21,3 @@ class ScoreBoard extends Component with HasGameRef {
     add(textComponent);
   }
 }
-
-
-
-// TextComponent(text: 'Hello, Flame', textRenderer: _regular)
-//         ..anchor = Anchor.topCenter
-//         ..x = size.x / 2
-//         ..y = 32.0,

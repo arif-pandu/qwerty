@@ -24,7 +24,6 @@ class PlayerBall extends BodyComponent<MainGame> with ContactCallbacks {
   void beginContact(Object other, Contact contact) {
     if (other is BoxPlatform) {
       other.removeFromParent();
-      // gameRef.score++;
       gameRef.updateScore();
     }
   }
