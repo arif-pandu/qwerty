@@ -1,16 +1,13 @@
 import 'dart:math';
-
-import 'package:flame/components.dart';
 import 'package:flame/events.dart';
-import 'package:flame/palette.dart';
-import 'package:flame/text.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:qwerty/model/ball.dart';
+
 import 'package:qwerty/model/ball.dart';
 import 'package:qwerty/model/laser_path.dart';
 import 'package:qwerty/model/letters.dart';
+import 'package:qwerty/model/particle.dart';
 import 'package:qwerty/model/score.dart';
 import 'package:qwerty/utils/list_keyboard.dart';
 import 'package:qwerty/model/platform.dart';
@@ -29,6 +26,8 @@ class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
     _score = value;
     // scoreText.text = value.toString();
   }
+
+  int randomNum = 0;
 
   late PlayerBall playerBall;
   late LaserPath laserPath;
@@ -52,20 +51,12 @@ class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
 
     scoreBoard = ScoreBoard(score: score);
     add(scoreBoard);
-    // add(
-    //   scoreText = TextComponent(
-    //     text: score.toString(),
-    //     anchor: Anchor.centerRight,
-    //     position: Vector2(camera.gameSize.x - 2, 2),
-    //     textRenderer: TextPaint(
-    //       style: TextStyle(fontSize: 3, color: BasicPalette.white.color),
-    //     ),
-    //   ),
-    // );
 
     Future.delayed(Duration(seconds: 0), () {
       add(BoxPlatform(camera.gameSize / 2));
     });
+
+    add(CustomParticle(position: ListPositions.position(size)[randomNum]));
   }
 
   @override
@@ -74,14 +65,14 @@ class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
     Set<LogicalKeyboardKey> keysPressed,
   ) {
     final isKeyDown = event is RawKeyDownEvent;
-    int random = Random().nextInt(26);
+    randomNum = Random().nextInt(26);
 
-    if (event.logicalKey != ListKeyBoard.listKey[random]) {
+    if (event.logicalKey != ListKeyBoard.listKey[randomNum]) {
       if (ListKeyBoard.listKey.contains(event.logicalKey)) {
         if (!isChainExist && isKeyDown) {
           isChainExist = true;
           laserPath = LaserPath(
-            startPoint: ListPositions.position(size)[random],
+            startPoint: ListPositions.position(size)[randomNum],
             endPoint: ListPositions.position(size)[ListKeyBoard.listKey.indexOf(event.logicalKey)],
           );
           add(laserPath);
@@ -94,6 +85,8 @@ class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
 
     return super.onKeyEvent(event, keysPressed);
   }
+
+  highlightLetter() {}
 
   updateScore() {
     score++;
