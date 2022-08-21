@@ -44,23 +44,15 @@ class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
   ) {
     final isKeyDown = event is RawKeyDownEvent;
 
-    if (!isChainExist && isKeyDown) {
-      isChainExist = true;
-      laserPath = LaserPath(startPoint: ListPositions.position(size)[22], endPoint: ListPositions.position(size)[ListKeyBoard.listKey.indexOf(event.logicalKey)]);
-      add(laserPath);
-
-      // if (event.logicalKey == LogicalKeyboardKey.keyQ) {
-      //   isChainExist = true;
-      //   laserPath = LaserPath(startPoint: ListPositions.position(size)[22], endPoint: ListPositions.position(size)[0]);
-      //   add(laserPath);
-      // } else if (event.logicalKey == LogicalKeyboardKey.keyW) {
-      //   isChainExist = true;
-      //   laserPath = LaserPath(startPoint: ListPositions.position(size)[22], endPoint: ListPositions.position(size)[1]);
-      //   add(laserPath);
-      // }
-    } else if (isChainExist && !isKeyDown) {
-      laserPath.removeFromParent();
-      isChainExist = false;
+    if (event.logicalKey != LogicalKeyboardKey.keyV) {
+      if (!isChainExist && isKeyDown) {
+        isChainExist = true;
+        laserPath = LaserPath(startPoint: ListPositions.position(size)[22], endPoint: ListPositions.position(size)[ListKeyBoard.listKey.indexOf(event.logicalKey)]);
+        add(laserPath);
+      } else if (isChainExist && !isKeyDown) {
+        laserPath.removeFromParent();
+        isChainExist = false;
+      }
     }
 
     return super.onKeyEvent(event, keysPressed);
