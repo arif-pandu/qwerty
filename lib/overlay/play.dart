@@ -6,6 +6,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
 import 'package:qwerty/model/custom_button.dart';
 import 'package:qwerty/screen/main_game.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PlayMenu extends StatelessWidget {
   const PlayMenu({
@@ -21,8 +22,8 @@ class PlayMenu extends StatelessWidget {
       child: Align(
         alignment: Alignment.center,
         child: Container(
-          height: MediaQuery.of(context).size.width * 0.5,
-          width: MediaQuery.of(context).size.width * 0.5,
+          height: MediaQuery.of(context).size.height * 0.5,
+          width: MediaQuery.of(context).size.height * 0.5,
           decoration: BoxDecoration(
             color: Colors.white,
           ),
@@ -59,12 +60,13 @@ class PlayMenu extends StatelessWidget {
                             Center(
                               child: Padding(
                                 padding: const EdgeInsets.all(15.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                child: ListView(
                                   children: const [
+                                    SizedBox(
+                                      height: 50,
+                                    ),
                                     Text(
-                                      "The Virtual Keyboard will indicate the selected letter and next you must press another letter(not same with indicated one) to make a straight line to keep the ball bouncing and get score as much as possible",
+                                      "The Virtual Keyboard will indicate the selected letter\nAnd then you must press another letter(not same with indicated one) to make a straight line\nKeep the ball bouncing and get score as much as possible",
                                       style: TextStyle(fontSize: 20, color: Color(0xff1a1a1a)),
                                       textAlign: TextAlign.center,
                                     ),
@@ -95,17 +97,28 @@ class PlayMenu extends StatelessWidget {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: const [
-                                    Text(
-                                      "My Name is Arif Pandu",
+                                  children: [
+                                    const Text(
+                                      "My Name is Arif Pandu\nFlutter Developer",
                                       style: TextStyle(fontSize: 20, color: Color(0xff1a1a1a)),
                                       textAlign: TextAlign.center,
                                     ),
-                                    SizedBox(height: 30),
-                                    Text(
-                                      "Find me on Twitter @mapen_",
-                                      style: TextStyle(fontSize: 20, color: Color(0xff1a1a1a)),
-                                      textAlign: TextAlign.center,
+                                    const SizedBox(height: 30),
+                                    Material(
+                                      color: Colors.transparent,
+                                      child: InkWell(
+                                        hoverColor: Colors.transparent,
+                                        onTap: () async {
+                                          await launchUrl(
+                                            Uri.parse("https://twitter.com/mapen_"),
+                                          );
+                                        },
+                                        child: Text(
+                                          "Find me on Twitter @mapen_",
+                                          style: TextStyle(fontSize: 20, color: Color(0xff1a1a1a)),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -135,8 +148,8 @@ class PlayMenu extends StatelessWidget {
             children: [
               Center(
                 child: Container(
-                  height: MediaQuery.of(context).size.width * 0.5,
-                  width: MediaQuery.of(context).size.width * 0.5,
+                  height: MediaQuery.of(context).size.height * 0.5,
+                  width: MediaQuery.of(context).size.height * 0.5,
                   color: Colors.white,
                   child: Stack(
                     children: [

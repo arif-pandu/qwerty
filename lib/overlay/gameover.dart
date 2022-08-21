@@ -22,8 +22,8 @@ class GameOver extends StatelessWidget {
       child: Align(
         alignment: Alignment.center,
         child: Container(
-          height: MediaQuery.of(context).size.width * 0.5,
-          width: MediaQuery.of(context).size.width * 0.5,
+          height: MediaQuery.of(context).size.height * 0.5,
+          width: MediaQuery.of(context).size.height * 0.5,
           color: Colors.white,
           child: Center(
             child: Column(
