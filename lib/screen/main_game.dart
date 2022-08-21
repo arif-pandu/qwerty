@@ -13,19 +13,14 @@ import 'package:qwerty/utils/list_keyboard.dart';
 import 'package:qwerty/model/platform.dart';
 import 'package:qwerty/utils/position.dart';
 import 'package:qwerty/model/wall.dart';
+import 'package:qwerty/utils/random.dart';
 
 class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
   MainGame() : super(gravity: Vector2.zero());
 
   bool isChainExist = false;
 
-  // late TextComponent scoreText;
-  int _score = 0;
-  int get score => _score;
-  set score(int value) {
-    _score = value;
-    // scoreText.text = value.toString();
-  }
+  int score = 0;
 
   int randomNum = 0;
 
@@ -53,7 +48,7 @@ class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
     add(scoreBoard);
 
     Future.delayed(Duration(seconds: 0), () {
-      add(BoxPlatform(camera.gameSize / 2));
+      spawnBoxPlatform();
     });
     randomNum = Random().nextInt(26);
 
@@ -90,10 +85,25 @@ class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
   highlightLetter() {
     randomNum = Random().nextInt(26);
     add(CustomParticle(position: ListPositions.position(size)[randomNum]));
+    spawnBoxPlatform();
   }
 
   updateScore() {
     score++;
     scoreBoard.textComponent.text = score.toString();
+  }
+
+  spawnBoxPlatform() {
+    /// min X = 0
+    /// max X = size.x - 2
+    /// min Y = 1
+    /// max Y = size.y * 2/5
+
+    add(BoxPlatform(
+      Vector2(
+        doubleInRange(0, camera.gameSize.x - 2),
+        doubleInRange(1, camera.gameSize.y * 2 / 5),
+      ),
+    ));
   }
 }
