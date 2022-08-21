@@ -7,6 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:qwerty/ball.dart';
 import 'package:qwerty/laser_path.dart';
 import 'package:qwerty/letters.dart';
+import 'package:qwerty/list_keyboard.dart';
 import 'package:qwerty/platform.dart';
 import 'package:qwerty/position.dart';
 import 'package:qwerty/wall.dart';
@@ -44,15 +45,19 @@ class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
     final isKeyDown = event is RawKeyDownEvent;
 
     if (!isChainExist && isKeyDown) {
-      if (event.logicalKey == LogicalKeyboardKey.keyQ) {
-        isChainExist = true;
-        laserPath = LaserPath(startPoint: ListPositions.position(size)[22], endPoint: ListPositions.position(size)[0]);
-        add(laserPath);
-      } else if (event.logicalKey == LogicalKeyboardKey.keyW) {
-        isChainExist = true;
-        laserPath = LaserPath(startPoint: ListPositions.position(size)[22], endPoint: ListPositions.position(size)[1]);
-        add(laserPath);
-      }
+      isChainExist = true;
+      laserPath = LaserPath(startPoint: ListPositions.position(size)[22], endPoint: ListPositions.position(size)[ListKeyBoard.listKey.indexOf(event.logicalKey)]);
+      add(laserPath);
+
+      // if (event.logicalKey == LogicalKeyboardKey.keyQ) {
+      //   isChainExist = true;
+      //   laserPath = LaserPath(startPoint: ListPositions.position(size)[22], endPoint: ListPositions.position(size)[0]);
+      //   add(laserPath);
+      // } else if (event.logicalKey == LogicalKeyboardKey.keyW) {
+      //   isChainExist = true;
+      //   laserPath = LaserPath(startPoint: ListPositions.position(size)[22], endPoint: ListPositions.position(size)[1]);
+      //   add(laserPath);
+      // }
     } else if (isChainExist && !isKeyDown) {
       laserPath.removeFromParent();
       isChainExist = false;
