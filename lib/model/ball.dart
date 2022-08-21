@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
@@ -8,6 +10,29 @@ import 'package:qwerty/screen/main_game.dart';
 import 'package:qwerty/utils/random.dart';
 
 class PlayerBall extends BodyComponent<MainGame> with ContactCallbacks {
+  PlayerBall() : super(renderBody: false);
+  SpriteAnimationComponent ball = SpriteAnimationComponent();
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+    Image image = await gameRef.images.load("custom-ball.png");
+    ball = SpriteAnimationComponent()
+      ..animation = SpriteAnimation.fromFrameData(
+        image,
+        SpriteAnimationData.sequenced(
+          amount: 10,
+          stepTime: 1 / 10,
+          textureSize: Vector2(100, 100),
+        ),
+      )
+      ..size = Vector2(1.5, 1.5)
+      ..anchor = Anchor.center
+      ..position = Vector2.zero();
+
+    add(ball);
+  }
+
   @override
   Body createBody() {
     Shape shape = CircleShape()..radius = 1.5;
