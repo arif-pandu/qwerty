@@ -1,20 +1,24 @@
 import 'package:flame_forge2d/flame_forge2d.dart';
+import 'package:qwerty/ball.dart';
 
-class Platform extends BodyComponent {
-  final Vector2 worldCenter;
+class BoxPlatform extends BodyComponent with ContactCallbacks {
+  final Vector2 position;
 
-  Platform(this.worldCenter);
+  BoxPlatform(this.position);
 
   @override
   Body createBody() {
     final shape = PolygonShape();
     shape.setAsBoxXY(4.0, 1);
+    final bodyDef = BodyDef(
+      position: position,
+      userData: this,
+    );
     final fixtureDef = FixtureDef(shape, friction: 0, restitution: 1);
 
-    final bodyDef = BodyDef(position: worldCenter.clone());
-    final ground = world.createBody(bodyDef);
-    ground.createFixture(fixtureDef);
-
-    return ground;
+    return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
+
+  @override
+  void beginContact(Object other, Contact contact) {}
 }

@@ -1,7 +1,8 @@
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
+import 'package:qwerty/platform.dart';
 
-class PlayerBall extends BodyComponent {
+class PlayerBall extends BodyComponent with ContactCallbacks {
   @override
   Body createBody() {
     Shape shape = CircleShape()..radius = 1.5;
@@ -16,5 +17,12 @@ class PlayerBall extends BodyComponent {
       userData: this,
     );
     return world.createBody(bodyDef)..createFixture(fixtureDef);
+  }
+
+  @override
+  void beginContact(Object other, Contact contact) {
+    if (other is BoxPlatform) {
+      other.removeFromParent();
+    }
   }
 }
