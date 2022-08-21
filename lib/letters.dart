@@ -39,7 +39,7 @@ List<Letter> createLetters(Vector2 size) {
       ListPositions.position(size).length,
       (index) => Letter(
         index: index,
-        srcPosition: Vector2(0, 50 * index.toDouble()),
+        srcPosition: Vector2(0, 50 * (ListPositions.listOffsetQwerty[index] - 1.toDouble())),
       ),
     ),
   ];

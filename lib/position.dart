@@ -113,4 +113,6 @@ class ListPositions {
           size.y * 0.9,
         ),
       ];
+
+  static const List<int> listOffsetQwerty = [17, 23, 5, 18, 20, 25, 21, 9, 15, 16, 1, 19, 4, 6, 7, 8, 10, 11, 12, 26, 24, 3, 22, 2, 14, 13];
 }

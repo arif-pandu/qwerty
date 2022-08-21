@@ -12,10 +12,7 @@ import 'package:qwerty/position.dart';
 import 'package:qwerty/wall.dart';
 
 class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
-  MainGame()
-      : super(
-          gravity: Vector2.zero(),
-        );
+  MainGame() : super(gravity: Vector2.zero());
 
   int letterTapped = 0;
   final maxLetterTapped = 2;
