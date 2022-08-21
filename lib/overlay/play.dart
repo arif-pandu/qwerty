@@ -113,10 +113,49 @@ class PlayMenu extends StatelessWidget {
                                             Uri.parse("https://twitter.com/mapen_"),
                                           );
                                         },
-                                        child: Text(
-                                          "Find me on Twitter @mapen_",
-                                          style: TextStyle(fontSize: 20, color: Color(0xff1a1a1a)),
-                                          textAlign: TextAlign.center,
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              height: 30,
+                                              width: 30,
+                                              child: Image.asset("images/twitter-icon.png"),
+                                            ),
+                                            SizedBox(width: 20),
+                                            Text(
+                                              "@mapen_",
+                                              style: TextStyle(fontSize: 20, color: Color(0xff1a1a1a)),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 30),
+                                    Material(
+                                      color: Colors.transparent,
+                                      child: InkWell(
+                                        hoverColor: Colors.transparent,
+                                        onTap: () async {
+                                          await launchUrl(
+                                            Uri.parse("https://github.com/arif-pandu/qwerty"),
+                                          );
+                                        },
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              height: 30,
+                                              width: 30,
+                                              child: Image.asset("images/github-icon.png"),
+                                            ),
+                                            SizedBox(width: 20),
+                                            Text(
+                                              "arif-pandu",
+                                              style: TextStyle(fontSize: 20, color: Color(0xff1a1a1a)),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ),

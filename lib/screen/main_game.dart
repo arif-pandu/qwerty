@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flame/events.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flame_forge2d/flame_forge2d.dart' hide Timer;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -112,7 +113,9 @@ class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
 
   gameOver() {
     timer.cancel();
-    pauseEngine();
+
+    // pauseEngine();
+
     overlays.add("gameover");
   }
 

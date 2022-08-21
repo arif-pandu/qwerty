@@ -1,4 +1,5 @@
 import 'package:flame/components.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:qwerty/model/laser_path.dart';
 import 'package:qwerty/model/platform.dart';
@@ -12,7 +13,7 @@ class PlayerBall extends BodyComponent<MainGame> with ContactCallbacks {
     Shape shape = CircleShape()..radius = 1.5;
     BodyDef bodyDef = BodyDef(
       type: BodyType.dynamic,
-      linearVelocity: Vector2(100, 100) * (doubleInRange(0, 1) - doubleInRange(0, 1)) * 100,
+      linearVelocity: Vector2(100, 100) * (doubleInRange(0, 1) - doubleInRange(0, 1)),
       position: Vector2(doubleInRange(30, gameRef.camera.gameSize.x - 30), 0),
     );
     FixtureDef fixtureDef = FixtureDef(
@@ -29,10 +30,11 @@ class PlayerBall extends BodyComponent<MainGame> with ContactCallbacks {
     if (other is BoxPlatform) {
       other.removeFromParent();
       gameRef.updateScore();
+      soundHitPlatform();
     }
 
     if (other is LaserPath) {
-      body.applyLinearImpulse(body.linearVelocity * 100);
+      body.applyLinearImpulse(body.linearVelocity * 1.01);
       print("Speed Up");
     }
 
@@ -40,5 +42,9 @@ class PlayerBall extends BodyComponent<MainGame> with ContactCallbacks {
       print("GAME OVER");
       gameRef.gameOver();
     }
+  }
+
+  Future<void> soundHitPlatform() async {
+    await FlameAudio.play("custom-plop.mp3");
   }
 }
