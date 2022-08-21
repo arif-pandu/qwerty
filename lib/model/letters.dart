@@ -1,6 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
-import 'package:qwerty/position.dart';
+import 'package:qwerty/utils/position.dart';
 
 class Letter extends Component with HasGameRef {
   Letter({

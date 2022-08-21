@@ -1,5 +1,5 @@
 import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:qwerty/ball.dart';
+import 'package:qwerty/model/ball.dart';
 
 class BoxPlatform extends BodyComponent with ContactCallbacks {
   final Vector2 position;

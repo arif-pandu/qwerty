@@ -4,13 +4,14 @@ import 'package:flame/events.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:qwerty/ball.dart';
-import 'package:qwerty/laser_path.dart';
-import 'package:qwerty/letters.dart';
-import 'package:qwerty/list_keyboard.dart';
-import 'package:qwerty/platform.dart';
-import 'package:qwerty/position.dart';
-import 'package:qwerty/wall.dart';
+import 'package:qwerty/model/ball.dart';
+import 'package:qwerty/model/ball.dart';
+import 'package:qwerty/model/laser_path.dart';
+import 'package:qwerty/model/letters.dart';
+import 'package:qwerty/utils/list_keyboard.dart';
+import 'package:qwerty/model/platform.dart';
+import 'package:qwerty/utils/position.dart';
+import 'package:qwerty/model/wall.dart';
 
 class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
   MainGame() : super(gravity: Vector2.zero());
@@ -19,7 +20,6 @@ class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
 
   late PlayerBall playerBall;
   late LaserPath laserPath;
-  late BoxPlatform platform;
 
   @override
   Future<void> onLoad() async {
@@ -35,8 +35,10 @@ class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
     letters.forEach(add);
 
     // add(Platform(camera.gameSize / 2));
-    platform = BoxPlatform(camera.gameSize / 2);
-    add(platform);
+
+    Future.delayed(Duration(seconds: 3), () {
+      add(BoxPlatform(camera.gameSize / 2));
+    });
   }
 
   @override

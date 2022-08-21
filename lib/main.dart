@@ -2,7 +2,7 @@ import 'package:flame/game.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:qwerty/main_game.dart';
+import 'package:qwerty/screen/main_game.dart';
 
 void main() {
   runApp(const MyApp());

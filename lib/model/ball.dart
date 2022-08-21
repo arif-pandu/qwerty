@@ -1,6 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:qwerty/platform.dart';
+import 'package:qwerty/model/platform.dart';
 
 class PlayerBall extends BodyComponent with ContactCallbacks {
   @override
