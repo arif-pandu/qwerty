@@ -36,7 +36,7 @@ class PlayerBall extends BodyComponent<MainGame> with ContactCallbacks {
 
     if (other is ForbiddenWall) {
       print("GAME OVER");
-      gameRef.pauseEngine();
+      gameRef.gameOver();
     }
   }
 }

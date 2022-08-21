@@ -116,4 +116,9 @@ class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
       ),
     ));
   }
+
+  gameOver() {
+    pauseEngine();
+    overlays.add("gameover");
+  }
 }
