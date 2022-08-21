@@ -18,4 +18,6 @@ class BoxPlatform extends BodyComponent {
 
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
+
+  Future<void> removeFromGame() async {}
 }

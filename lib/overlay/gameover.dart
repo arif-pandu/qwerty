@@ -42,14 +42,19 @@ class GameOver extends StatelessWidget {
                     CustomButton(
                       game: game,
                       text: "RESTART",
-                      onTap: () {
-                        //
+                      onTap: () async {
+                        await game.resetGame();
+                        game.overlays.remove("gameover");
+
+                        game.resumeEngine();
+                        await game.playGame();
                       },
                     ),
                     CustomButton(
                       game: game,
                       text: "MENU",
-                      onTap: () {
+                      onTap: () async {
+                        await game.resetGame();
                         game.overlays.remove("gameover");
                         game.overlays.add("menu");
                       },

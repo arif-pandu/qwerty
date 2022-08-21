@@ -24,9 +24,10 @@ class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
 
   int randomNum = 0;
 
-  late PlayerBall playerBall;
   late LaserPath laserPath;
   late ScoreBoard scoreBoard;
+
+  late BoxPlatform boxPlatform;
 
   late Timer timer;
 
@@ -40,9 +41,6 @@ class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
     var boundaries = createBoundaries(this);
     boundaries.forEach(add);
     add(ForbiddenWall());
-
-    playerBall = PlayerBall();
-    // add(playerBall);
 
     var letters = createLetters(size);
     letters.forEach(add);
@@ -79,7 +77,7 @@ class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
   }
 
   playGame() {
-    add(playerBall);
+    add(PlayerBall());
     Future.delayed(const Duration(seconds: 3), () {
       spawnBoxPlatform();
       timer = Timer.periodic(
@@ -103,13 +101,8 @@ class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
     scoreBoard.textComponent.text = score.toString();
   }
 
-  spawnBoxPlatform() {
-    /// min X = 2
-    /// max X = size.x - 2
-    /// min Y = 2
-    /// max Y = size.y * 2/5
-
-    add(BoxPlatform(
+  Future<void> spawnBoxPlatform() async {
+    add(boxPlatform = BoxPlatform(
       Vector2(
         doubleInRange(2, camera.gameSize.x - 2),
         doubleInRange(2, camera.gameSize.y * 2 / 5),
@@ -118,7 +111,18 @@ class MainGame extends Forge2DGame with HasTappables, KeyboardEvents {
   }
 
   gameOver() {
+    timer.cancel();
     pauseEngine();
     overlays.add("gameover");
+  }
+
+  Future<void> resetGame() async {
+    print("RESET GAME");
+    score = 0;
+    scoreBoard.textComponent.text = score.toString();
+    removeAll(children.query<PlayerBall>());
+
+    final obstacles = children.query<BoxPlatform>();
+    removeAll(obstacles);
   }
 }
